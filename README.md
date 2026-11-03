@@ -23,7 +23,7 @@ Not connected, and not deployed. When a GitHub repository exists, the project se
 
 - Build command: `bash build.sh`
 - Build output directory: `dist`
-- Production branch: `production` until launch, so `main` only gets preview deployments
+- Production branch: `main`, with automatic production deployments off until Kenneth approves
 
 Details, branch protection, rollback, and the checklist are in `docs/cloudflare-pages.md`.
 

@@ -14,7 +14,7 @@ Use these when the Pages project is created. Framework preset: **None**.
 
 | Setting | Value |
 | --- | --- |
-| Production branch | `production` until launch, then `main`. See below. |
+| Production branch | `main`. Leave automatic production deployments off until Kenneth approves. See below. |
 | Build command | `bash build.sh` |
 | Build output directory | `dist` |
 | Root directory | `/` |
@@ -53,18 +53,28 @@ Push `main` from this checkout only when asked. Do not force-push. Anything push
 
 ## 2. Branch protection on `main`
 
-In the GitHub repository: **Settings → Rules → Rulesets → New ruleset → New branch ruleset**.
+On GitHub, open the repository and click **Settings**. In the left sidebar, under **Code, planning, and automation**, click **Rules**, then **Rulesets**. Click **New ruleset**, then **New branch ruleset**.
 
-- Enforcement status: **Active**
-- Target: branch name `main` (or the default branch, once `main` is the default)
-- Bypass list: empty, so admins cannot push either
-- Rules:
+- **Ruleset name:** `Protect main`
+- **Enforcement status:** **Active**. The form opens on **Disabled**. Click **Disabled** and choose **Active**. A disabled ruleset does not block pushes.
+- **Bypass list:** leave it empty. Do not add repository admins, so nobody can push past the rules.
+- **Target branches:** click **Add target**, then **Include by pattern**, and enter `main`. While `main` is the default branch, **Include default branch** is the same target.
+- Under **Branch protections**, confirm these and leave the others off:
+  - **Restrict deletions** (on by default; leave it on)
+  - **Block force pushes** (on by default; leave it on)
   - **Require a pull request before merging**
-  - Required approvals: **0** if Kenneth is the only maintainer. That still rejects a direct `git push` to `main`, and he can open a pull request and merge it himself. Set approvals to **1** only when someone else must sign off.
-  - **Block force pushes**
-  - **Restrict deletions**
+    - Required approvals: **0** while Kenneth is the only maintainer. That still rejects a direct `git push` to `main`. He opens a pull request and merges it himself. Set approvals to **1** only when someone else must sign off.
 
-Classic branch protection is the same idea: **Settings → Branches → Add branch ruleset** or **Add classic branch protection rule** for `main`, enable “Require a pull request before merging”, and enable “Do not allow bypassing the above settings”.
+Click **Create**.
+
+Classic branch protection, from **Settings → Branches** (same sidebar group): click **Add classic branch protection rule**. If that button is not there, click **Add branch protection rule**.
+
+- Branch name pattern: `main`
+- Enable **Require a pull request before merging**. Leave **Require approvals** unchecked, so the count stays 0, unless someone other than Kenneth must sign off.
+- Enable **Do not allow bypassing the above settings**
+- Leave **Allow force pushes** unchecked
+- Leave **Allow deletions** unchecked
+- Click **Create** (or **Save changes** if you are editing an existing rule)
 
 Pull requests are how preview deployments get a URL. Direct pushes to `main` will be rejected by GitHub.
 
@@ -74,21 +84,21 @@ Pull requests are how preview deployments get a URL. Direct pushes to `main` wil
 
 | Setting | Value |
 | --- | --- |
-| Production branch | `production` |
+| Production branch | `main` |
 | Build command | `bash build.sh` |
 | Build output directory | `dist` |
 | Framework preset | None |
 
-`production` does not exist yet. Do not create it. With that as the production branch, pushes to `main` and to pull-request branches are preview deployments, not production.
+The create form only lists branches that already exist. `main` is the only one, so select it. Do not create a `production` branch.
+
+A project created with `main` as the production branch can start one production build immediately. That build is not a launch. Do not attach a domain to it, and do not treat the `*.pages.dev` hostname as the public site.
 
 Then open the project → **Settings → Builds & deployments**:
 
-- **Configure Production deployments:** production branch remains `production`. Leave “Enable automatic production branch deployments” on, so that the day you do create `production`, it deploys. Until that branch exists, there is nothing for it to deploy.
+- **Configure Production deployments:** turn **off** “Enable automatic production branch deployments”, then **Save**. Leave that control off until Kenneth approves a launch. Do not turn it back on, and do not create a `production` branch, before he does.
 - **Configure Preview deployments:** **All non-production branches**.
 
-If the create form will not accept a branch that does not exist, use `main` as the production branch and, in the same settings screen, turn **off** “Enable automatic production branch deployments”, then save. Do that before treating any `*.pages.dev` URL as intentional. A project created with `main` as the production branch can start one production build immediately. The unused-branch setup avoids that.
-
-Preview deployments of other branches keep running either way.
+Preview deployments of other branches, and the preview URL Cloudflare posts on a pull request, keep running while production deployments are off.
 
 This project uses Git integration, not Direct Upload. A Git-integrated Pages project cannot be switched to Direct Upload later.
 
@@ -98,24 +108,25 @@ This project uses Git integration, not Direct Upload. A Git-integrated Pages pro
 2. Open a pull request into `main`.
 3. Cloudflare builds a preview and posts the URL on the pull request when PR comments are enabled (Pages → Settings → Builds & deployments → pull request comments). The same deployment is listed under **Deployments** with environment **Preview**.
 4. Review the preview. Production is unchanged.
-5. Merge the pull request. With production branch `production`, merging to `main` updates the `main` preview only.
+5. Merge the pull request. With automatic production deployments off, that merge does not publish production. The preview URL belongs to the pull-request branch. Production stays where it is until Kenneth approves the launch step.
 
 Skipping a build: put `[skip ci]` in the commit message. Use that sparingly. Docs-only commits still match the build, and that is acceptable.
 
 ## Launch
 
-When the preview is approved and you mean to publish:
+Only after Kenneth approves the preview:
 
-1. Either change the production branch to `main` (**Settings → Builds & deployments → Configure Production deployments**), which deploys the current `main`,
-2. Or push the approved `main` commit to a new branch named `production`.
+1. Open **Settings → Builds & deployments → Configure Production deployments**.
+2. Turn **on** “Enable automatic production branch deployments” with production branch `main`, then **Save**. That deploys the current `main`.
+3. Or, if you would rather publish from a separate branch, push the approved `main` commit to a new branch named `production`, set that as the production branch, turn automatic production deployments on, and **Save**.
 
-The production hostname is `<project>.pages.dev`. Do not attach a custom domain in the same step unless that is an explicit decision. After a domain is connected, set the canonical URL and absolute Open Graph image URLs at the `CANONICAL` comment in `index.html`.
+Do not do either step before Kenneth approves. The production hostname is `<project>.pages.dev`. Do not attach a custom domain in the same step unless that is an explicit decision. After a domain is connected, set the canonical URL and absolute Open Graph image URLs at the `CANONICAL` comment in `index.html`.
 
 ## Rollback
 
 Use both. They do different jobs.
 
-**Pages, immediate.** Workers & Pages → the project → **Deployments**. Filter to Production. On the last good deployment, open the menu and choose **Rollback to this deployment**. The previous build becomes production again. Git is unchanged, so the next production build from `main` or `production` will replace the rollback unless the bad commit is also reverted.
+**Pages, immediate.** Workers & Pages → the project → **Deployments**. On a successful production deployment, open its three-dot menu and choose **Rollback to this deployment**, then confirm. Preview deployments are not rollback targets. The previous build becomes production again. Git is unchanged, so the next production build will replace the rollback unless the bad commit is also reverted.
 
 **Git, durable.** On a new branch, `git revert <bad-commit-sha>`, push, and merge the pull request. That puts `main` back. If production deployments are on, the merge builds a new production deployment of the reverted tree. If they are still held, merge first, check the preview, then promote as in Launch.
 
@@ -124,7 +135,7 @@ Do not force-push `main`. Branch protection blocks it, and a force-push would no
 ## Future maintenance
 
 - Edit the page in `index.html`, `css/`, `js/`, and `assets/`. Do not edit `dist/`; the next build overwrites it.
-- Every link to the app must stay `https://pressure-test-log.vercel.app/`, including the JSON-LD `url`. There are five of them in `index.html`.
+- Every link to the app must stay `https://pressure-test-log.vercel.app/`, including the JSON-LD `url`. `index.html` has five of those links, plus the `url` in the JSON-LD block.
 - Screenshots and `assets/sample/sample-pressure-test-record.pdf` are the real sample. Replace them only with new output from the app, and keep the example-data label.
 - A tracking tag, if one is added later, goes in the head comment described in `docs/tracking.md`. None is installed.
 - No environment variables and no Node packages. The build is `bash build.sh`.
@@ -137,8 +148,9 @@ Do not force-push `main`. Branch protection blocks it, and a force-push would no
 - [ ] GitHub ruleset on `main`: pull request required, force-push and deletion blocked, bypass list empty
 - [ ] Pages project connected to that GitHub repository (Git integration, not Direct Upload)
 - [ ] Build command `bash build.sh`, output directory `dist`, framework preset None
-- [ ] Production branch is `production` and that branch does not exist, or automatic production deployments are off
-- [ ] Preview deployments: all non-production branches
+- [ ] Automatic production deployments are off, and they stay off until Kenneth approves
+- [ ] Production branch is `main` (do not create `production` before he approves)
+- [ ] Preview deployments: all non-production branches, including pull requests
 - [ ] A pull request produced a preview URL, and production was not updated
 - [ ] Preview checked: page, sample PDF, and the five app links
 - [ ] Custom domain not connected
