@@ -1,10 +1,10 @@
 # GitHub and Cloudflare Pages
 
-This site is not deployed. The GitHub repository is private:
+Production is not published. The GitHub repository is public:
 
 https://github.com/cruelreaver2-alt/pressure-test-log-site
 
-Default branch: `main`. It must contain only this marketing site. No tokens, no `.env` files, no private app source, and no customer data. The sample report is labelled example data. Do not connect a domain until the launch checklist says so.
+Default branch: `main`. It must contain only this marketing site. Nothing private may be added: no tokens, no `.env` files, no private app source, and no customer data. The sample report is labelled example data. Do not connect a domain until the launch checklist says so.
 
 The public site is the `dist/` folder produced by `bash build.sh`. Design, copy, screenshots, and the sample PDF are copied unchanged. Docs, `serve.py`, and `build.sh` stay in git and are not part of the upload.
 
@@ -14,7 +14,7 @@ Use these when the Pages project is created. Framework preset: **None**.
 
 | Setting | Value |
 | --- | --- |
-| Production branch | `main`. Leave automatic production deployments off until Kenneth approves. See below. |
+| Production branch | `main`. `production_deployments_enabled` is false until a later, separate approval. |
 | Build command | `bash build.sh` |
 | Build output directory | `dist` |
 | Root directory | `/` |
@@ -47,51 +47,25 @@ Nothing was deleted from git in the audit. These are kept in the repository and 
 
 ## 1. GitHub repository
 
-The repository is private: https://github.com/cruelreaver2-alt/pressure-test-log-site, default branch `main`. It was created empty. Do not add a GitHub README, license, or `.gitignore` on top of this tree, or the first push will need a merge.
+The repository is public: https://github.com/cruelreaver2-alt/pressure-test-log-site, default branch `main`. Anything pushed here can be read by anyone. Nothing private may be added: no secrets, no tokens, no `.env` files, no private application source, and no customer data.
 
-Push `main` from this checkout only when asked. Do not force-push. A private repository is still the wrong place for secrets or the private application source.
+Do not force-push `main`. The ruleset below rejects a direct push.
 
 ## 2. Branch protection on `main`
 
-This repository is private and owned by a personal account. On 3 November 2026, `GET /repos/cruelreaver2-alt/pressure-test-log-site/rulesets` and `GET /repos/cruelreaver2-alt/pressure-test-log-site/rules/branches/main` both returned HTTP 403: “Upgrade to GitHub Pro or make this repository public to enable this feature.” No ruleset was created.
+The active ruleset is **Protect Main**. It targets `refs/heads/main`. Enforcement status is **Active**. The bypass list is empty.
 
-GitHub enforces rulesets on public repositories with GitHub Free, and on private repositories with GitHub Pro, GitHub Team, or GitHub Enterprise Cloud. Classic protected branches follow the same split, plus GitHub Enterprise Server. GitHub Free does not enforce either on a private personal repository. Do not click through the steps below until one of these is true:
+Rules on that ruleset:
 
-- The personal account is on **GitHub Pro** (or the repository has moved to an organization on Team or Enterprise), and a fresh ruleset read no longer returns that 403, or
-- The repository is **public**. That is the Free-plan alternative. It makes this marketing site world-readable, so it is a separate decision.
+- **Restrict deletions**
+- **Block force pushes**
+- **Require a pull request before merging** (required approving reviews: 0)
 
-On GitHub, open the repository and click **Settings**. In the left sidebar, under **Code, planning, and automation**, click **Rules**, then **Rulesets**. Click **New ruleset**, then **New branch ruleset**.
+Direct `git push` to `main` is rejected. Open a pull request. This is already in place; do not add a second ruleset for the same job.
 
-- **Ruleset name:** `Protect main`
-- **Enforcement status:** **Active**. The form opens on **Disabled**. Click **Disabled** and choose **Active**. A disabled ruleset does not block pushes.
-- **Bypass list:** leave it empty. Do not add repository admins, so nobody can push past the rules.
-- **Target branches:** click **Add target**, then **Include by pattern**, and enter `main`. While `main` is the default branch, **Include default branch** is the same target.
-- Under **Branch protections**, confirm these and leave the others off:
-  - **Restrict deletions** (on by default; leave it on)
-  - **Block force pushes** (on by default; leave it on)
-  - **Require a pull request before merging**
-    - Required approvals: **0** while Kenneth is the only maintainer. That still rejects a direct `git push` to `main`. He opens a pull request and merges it himself. Set approvals to **1** only when someone else must sign off.
+## 3. Cloudflare Pages
 
-Click **Create**.
-
-Classic branch protection, from **Settings → Branches** (same sidebar group): click **Add classic branch protection rule**. If that button is not there, click **Add branch protection rule**.
-
-- Branch name pattern: `main`
-- Enable **Require a pull request before merging**. Leave **Require approvals** unchecked, so the count stays 0, unless someone other than Kenneth must sign off.
-- Enable **Do not allow bypassing the above settings**
-- Leave **Allow force pushes** unchecked
-- Leave **Allow deletions** unchecked
-- Click **Create** (or **Save changes** if you are editing an existing rule)
-
-Pull requests are how preview deployments get a URL. Direct pushes to `main` will be rejected by GitHub.
-
-## 3. Connect Cloudflare Pages
-
-Do not connect this yet. The steps below are the path that keeps production unpublished. Every step needs Kenneth’s GitHub or Cloudflare login. Do not attach a domain.
-
-The dashboard Git flow publishes production immediately. Cloudflare’s Git integration guide ends setup with **Save and Deploy**, and that button builds the production branch and deploys it to the `*.pages.dev` hostname. Do not open **Workers & Pages → Create application → Pages → Connect to Git** and finish that wizard. Sources: [Git integration](https://developers.cloudflare.com/pages/get-started/git-integration/) (“Your first deploy”) and [Branch deployment controls](https://developers.cloudflare.com/pages/configuration/branch-build-controls/).
-
-Create the project with the API instead. Project creation and deployment creation are different calls. Set `source.config.production_deployments_enabled` to `false` on create, and do not call the deployments endpoint. Sources: [Create a Pages project](https://developers.cloudflare.com/api/resources/pages/subresources/projects/methods/create/) and [Create a Pages deployment](https://developers.cloudflare.com/api/resources/pages/subresources/projects/subresources/deployments/methods/create/).
+The project **pressure-test-log-site** exists and is connected to this GitHub repository. It is Git integration, not Direct Upload. A Git-integrated project cannot be switched to Direct Upload later. No custom domain is attached.
 
 | Setting | Value |
 | --- | --- |
@@ -99,65 +73,33 @@ Create the project with the API instead. Project creation and deployment creatio
 | Build command | `bash build.sh` |
 | Build output directory | `dist` |
 | Framework preset | None |
-| `production_deployments_enabled` | `false` until Kenneth approves a launch |
+| `production_deployments_enabled` | `false` |
 | `preview_deployment_setting` | `all` |
+| Preview URL | `https://<branch>.pressure-test-log-site.pages.dev` |
 
-### Steps Kenneth runs
+A `/` in a branch name is a `-` in that hostname. The preview for `cursor/hero-subhead-65eb` is `https://cursor-hero-subhead-65eb.pressure-test-log-site.pages.dev`.
 
-1. **GitHub login.** Install or approve the Cloudflare GitHub app on https://github.com/cruelreaver2-alt/pressure-test-log-site only. If the only way Cloudflare offers is the Pages wizard, stop on **Install & Authorize**. Do not click **Begin setup** or **Save and Deploy**.
-2. **Cloudflare login.** Create an API token with permission to edit Cloudflare Pages on his account, and copy the account ID from the dashboard URL (`dash.cloudflare.com/<account_id>`). Keep the token off this repository. No environment variables belong in the Pages project.
-3. **Cloudflare login, from his own machine.** Create the project. This call configures Git integration. It is not the deployments call, and production deployments are off.
-
-```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/pages/projects" \
-  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-  -H "Content-Type: application/json" \
-  --data '{
-    "name": "pressure-test-log-site",
-    "production_branch": "main",
-    "build_config": {
-      "build_command": "bash build.sh",
-      "destination_dir": "dist",
-      "root_dir": ""
-    },
-    "source": {
-      "type": "github",
-      "config": {
-        "owner": "cruelreaver2-alt",
-        "repo_name": "pressure-test-log-site",
-        "production_branch": "main",
-        "production_deployments_enabled": false,
-        "preview_deployment_setting": "all",
-        "pr_comments_enabled": true
-      }
-    }
-  }'
-```
-
-4. **Cloudflare login.** Read the project back and confirm `source.config.production_deployments_enabled` is `false` and `preview_deployment_setting` is `all`. In **Workers & Pages → pressure-test-log-site → Deployments**, confirm the list is empty. Do not call `POST /accounts/{account_id}/pages/projects/pressure-test-log-site/deployments`. In **Settings → Builds & deployments → Configure Production deployments**, “Enable automatic production branch deployments” stays off. **Configure Preview deployments** stays **All non-production branches**.
-5. Leave it there. Preview deployments of other branches, and the preview URL on a pull request, can run while production stays off. A `*.pages.dev` hostname is not a launch, and none should exist yet.
-
-This project uses Git integration, not Direct Upload. A Git-integrated Pages project cannot be switched to Direct Upload later. Do not create a `production` branch.
+Leave **Settings → Builds & deployments → Configure Production deployments** off. **Configure Preview deployments** stays **All non-production branches**. Do not put an API token in this repository, in a commit, or in a Pages environment variable. The project has no environment variables.
 
 ## Preview workflow
 
-1. Branch from `main`. Do not commit to `main` locally and push it; GitHub will refuse the push once protection is on.
+1. Branch from `main`. Do not push the branch’s commits straight to `main`. **Protect Main** rejects that push.
 2. Open a pull request into `main`.
-3. Cloudflare builds a preview and posts the URL on the pull request when PR comments are enabled (Pages → Settings → Builds & deployments → pull request comments). The same deployment is listed under **Deployments** with environment **Preview**.
-4. Review the preview. Production is unchanged.
-5. Merge the pull request. With automatic production deployments off, that merge does not publish production. The preview URL belongs to the pull-request branch. Production stays where it is until Kenneth approves the launch step.
+3. Cloudflare builds a preview at `https://<branch>.pressure-test-log-site.pages.dev` and can post that URL on the pull request (Pages → Settings → Builds & deployments → pull request comments). The same deployment is listed under **Deployments** with environment **Preview**.
+4. Review the preview. Production is unchanged while `production_deployments_enabled` is false.
+5. Merge the pull request when it is approved. The merge updates `main` and does not publish production.
 
 Skipping a build: put `[skip ci]` in the commit message. Use that sparingly. Docs-only commits still match the build, and that is acceptable.
 
 ## Launch
 
-Only after Kenneth approves the preview:
+Still to do, in this order:
 
-1. Open **Settings → Builds & deployments → Configure Production deployments**.
-2. Turn **on** “Enable automatic production branch deployments” with production branch `main`, then **Save**. That deploys the current `main`.
-3. Or, if you would rather publish from a separate branch, push the approved `main` commit to a new branch named `production`, set that as the production branch, turn automatic production deployments on, and **Save**.
+1. Check the preview for pull request #1, then merge https://github.com/cruelreaver2-alt/pressure-test-log-site/pull/1 into `main`. Production stays unpublished.
+2. After a separate approval, publish that `main` commit. Either turn **on** “Enable automatic production branch deployments” (**Settings → Builds & deployments → Configure Production deployments**) or trigger one production deployment of the approved commit. Do not do this in the same step as the merge.
+3. A custom domain comes later, and only as its own decision. After a domain is connected, set the canonical URL and absolute Open Graph image URLs at the `CANONICAL` comment in `index.html`.
 
-Do not do either step before Kenneth approves. The production hostname is `<project>.pages.dev`. Do not attach a custom domain in the same step unless that is an explicit decision. After a domain is connected, set the canonical URL and absolute Open Graph image URLs at the `CANONICAL` comment in `index.html`.
+The production hostname, once a production deployment exists, is `pressure-test-log-site.pages.dev`.
 
 ## Rollback
 
@@ -180,15 +122,19 @@ Do not force-push `main`. Branch protection blocks it, and a force-push would no
 
 ## Publishing checklist
 
-- [ ] Private repository https://github.com/cruelreaver2-alt/pressure-test-log-site stays free of secrets and private source
-- [ ] `main` pushed to that repository when asked, without a force-push
-- [ ] GitHub ruleset on `main`: pull request required, force-push and deletion blocked, bypass list empty
-- [ ] Pages project created by API with Git integration, not Direct Upload, and not by **Save and Deploy**
-- [ ] Build command `bash build.sh`, output directory `dist`, framework preset None
-- [ ] `production_deployments_enabled` is false, the Deployments list is empty, and it stays that way until Kenneth approves
-- [ ] Production branch is `main` (do not create `production` before he approves)
-- [ ] Preview deployments: all non-production branches, including pull requests
-- [ ] A pull request produced a preview URL, and production was not updated
-- [ ] Preview checked: page, sample PDF, and the five app links
-- [ ] Custom domain not connected
-- [ ] Launch is a separate step: point production at the approved commit, then consider the domain and the `CANONICAL` tags
+Done:
+
+- [x] Public repository https://github.com/cruelreaver2-alt/pressure-test-log-site. Nothing private may be added.
+- [x] Ruleset **Protect Main** is Active on `main`: pull request required, force-push blocked, deletion blocked, bypass list empty
+- [x] Pages project `pressure-test-log-site` is Git-connected, not Direct Upload
+- [x] Build command `bash build.sh`, output directory `dist`, framework preset None
+- [x] Production branch is `main`, and `production_deployments_enabled` is false
+- [x] Previews are on for all non-production branches. URL pattern `https://<branch>.pressure-test-log-site.pages.dev`
+- [x] No custom domain is connected
+
+Remaining before launch:
+
+- [ ] Preview for pull request #1 checked: page, sample PDF, and the five app links
+- [ ] Pull request #1 merged into `main`. That merge does not publish production.
+- [ ] A separately approved production deployment of that `main` commit: enable production deployments, or trigger one deployment
+- [ ] Domain later. Then set the `CANONICAL` tags in `index.html`
