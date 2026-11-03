@@ -53,6 +53,13 @@ Push `main` from this checkout only when asked. Do not force-push. A private rep
 
 ## 2. Branch protection on `main`
 
+This repository is private and owned by a personal account. On 3 November 2026, `GET /repos/cruelreaver2-alt/pressure-test-log-site/rulesets` and `GET /repos/cruelreaver2-alt/pressure-test-log-site/rules/branches/main` both returned HTTP 403: “Upgrade to GitHub Pro or make this repository public to enable this feature.” No ruleset was created.
+
+GitHub enforces rulesets on public repositories with GitHub Free, and on private repositories with GitHub Pro, GitHub Team, or GitHub Enterprise Cloud. Classic protected branches follow the same split, plus GitHub Enterprise Server. GitHub Free does not enforce either on a private personal repository. Do not click through the steps below until one of these is true:
+
+- The personal account is on **GitHub Pro** (or the repository has moved to an organization on Team or Enterprise), and a fresh ruleset read no longer returns that 403, or
+- The repository is **public**. That is the Free-plan alternative. It makes this marketing site world-readable, so it is a separate decision.
+
 On GitHub, open the repository and click **Settings**. In the left sidebar, under **Code, planning, and automation**, click **Rules**, then **Rulesets**. Click **New ruleset**, then **New branch ruleset**.
 
 - **Ruleset name:** `Protect main`
@@ -80,7 +87,11 @@ Pull requests are how preview deployments get a URL. Direct pushes to `main` wil
 
 ## 3. Connect Cloudflare Pages
 
-**Workers & Pages → Create → Pages → Connect to Git → GitHub.** Install or approve the Cloudflare GitHub app on the new repository only.
+Do not connect this yet. The steps below are the path that keeps production unpublished. Every step needs Kenneth’s GitHub or Cloudflare login. Do not attach a domain.
+
+The dashboard Git flow publishes production immediately. Cloudflare’s Git integration guide ends setup with **Save and Deploy**, and that button builds the production branch and deploys it to the `*.pages.dev` hostname. Do not open **Workers & Pages → Create application → Pages → Connect to Git** and finish that wizard. Sources: [Git integration](https://developers.cloudflare.com/pages/get-started/git-integration/) (“Your first deploy”) and [Branch deployment controls](https://developers.cloudflare.com/pages/configuration/branch-build-controls/).
+
+Create the project with the API instead. Project creation and deployment creation are different calls. Set `source.config.production_deployments_enabled` to `false` on create, and do not call the deployments endpoint. Sources: [Create a Pages project](https://developers.cloudflare.com/api/resources/pages/subresources/projects/methods/create/) and [Create a Pages deployment](https://developers.cloudflare.com/api/resources/pages/subresources/projects/subresources/deployments/methods/create/).
 
 | Setting | Value |
 | --- | --- |
@@ -88,19 +99,45 @@ Pull requests are how preview deployments get a URL. Direct pushes to `main` wil
 | Build command | `bash build.sh` |
 | Build output directory | `dist` |
 | Framework preset | None |
+| `production_deployments_enabled` | `false` until Kenneth approves a launch |
+| `preview_deployment_setting` | `all` |
 
-The create form only lists branches that already exist. `main` is the only one, so select it. Do not create a `production` branch.
+### Steps Kenneth runs
 
-A project created with `main` as the production branch can start one production build immediately. That build is not a launch. Do not attach a domain to it, and do not treat the `*.pages.dev` hostname as the public site.
+1. **GitHub login.** Install or approve the Cloudflare GitHub app on https://github.com/cruelreaver2-alt/pressure-test-log-site only. If the only way Cloudflare offers is the Pages wizard, stop on **Install & Authorize**. Do not click **Begin setup** or **Save and Deploy**.
+2. **Cloudflare login.** Create an API token with permission to edit Cloudflare Pages on his account, and copy the account ID from the dashboard URL (`dash.cloudflare.com/<account_id>`). Keep the token off this repository. No environment variables belong in the Pages project.
+3. **Cloudflare login, from his own machine.** Create the project. This call configures Git integration. It is not the deployments call, and production deployments are off.
 
-Then open the project → **Settings → Builds & deployments**:
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/pages/projects" \
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  --data '{
+    "name": "pressure-test-log-site",
+    "production_branch": "main",
+    "build_config": {
+      "build_command": "bash build.sh",
+      "destination_dir": "dist",
+      "root_dir": ""
+    },
+    "source": {
+      "type": "github",
+      "config": {
+        "owner": "cruelreaver2-alt",
+        "repo_name": "pressure-test-log-site",
+        "production_branch": "main",
+        "production_deployments_enabled": false,
+        "preview_deployment_setting": "all",
+        "pr_comments_enabled": true
+      }
+    }
+  }'
+```
 
-- **Configure Production deployments:** turn **off** “Enable automatic production branch deployments”, then **Save**. Leave that control off until Kenneth approves a launch. Do not turn it back on, and do not create a `production` branch, before he does.
-- **Configure Preview deployments:** **All non-production branches**.
+4. **Cloudflare login.** Read the project back and confirm `source.config.production_deployments_enabled` is `false` and `preview_deployment_setting` is `all`. In **Workers & Pages → pressure-test-log-site → Deployments**, confirm the list is empty. Do not call `POST /accounts/{account_id}/pages/projects/pressure-test-log-site/deployments`. In **Settings → Builds & deployments → Configure Production deployments**, “Enable automatic production branch deployments” stays off. **Configure Preview deployments** stays **All non-production branches**.
+5. Leave it there. Preview deployments of other branches, and the preview URL on a pull request, can run while production stays off. A `*.pages.dev` hostname is not a launch, and none should exist yet.
 
-Preview deployments of other branches, and the preview URL Cloudflare posts on a pull request, keep running while production deployments are off.
-
-This project uses Git integration, not Direct Upload. A Git-integrated Pages project cannot be switched to Direct Upload later.
+This project uses Git integration, not Direct Upload. A Git-integrated Pages project cannot be switched to Direct Upload later. Do not create a `production` branch.
 
 ## Preview workflow
 
@@ -146,9 +183,9 @@ Do not force-push `main`. Branch protection blocks it, and a force-push would no
 - [ ] Private repository https://github.com/cruelreaver2-alt/pressure-test-log-site stays free of secrets and private source
 - [ ] `main` pushed to that repository when asked, without a force-push
 - [ ] GitHub ruleset on `main`: pull request required, force-push and deletion blocked, bypass list empty
-- [ ] Pages project connected to that GitHub repository (Git integration, not Direct Upload)
+- [ ] Pages project created by API with Git integration, not Direct Upload, and not by **Save and Deploy**
 - [ ] Build command `bash build.sh`, output directory `dist`, framework preset None
-- [ ] Automatic production deployments are off, and they stay off until Kenneth approves
+- [ ] `production_deployments_enabled` is false, the Deployments list is empty, and it stays that way until Kenneth approves
 - [ ] Production branch is `main` (do not create `production` before he approves)
 - [ ] Preview deployments: all non-production branches, including pull requests
 - [ ] A pull request produced a preview URL, and production was not updated
