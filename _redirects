@@ -1,0 +1,2 @@
+# Single address for the page. Cloudflare applies this; it is not a client redirect.
+/index.html / 301

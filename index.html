@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pressure Test Log — professional pressure test records</title>
+    <meta
+      name="description"
+      content="Record test pressures, instruments, calibration details, evidence and signatures. Generate clear, traceable PDF reports from one simple workflow."
+    />
+    <meta name="theme-color" content="#12171e" />
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+    <link rel="stylesheet" href="/css/site.css" />
+
+    <!--
+      CANONICAL: when a custom domain is connected, set the absolute URL here.
+      <link rel="canonical" href="https://example.com/" />
+      Also set og:url and the og:image / twitter:image values to absolute URLs.
+    -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Pressure Test Log — professional pressure test records" />
+    <meta
+      property="og:description"
+      content="Record test pressures, instruments, calibration details, evidence and signatures. Generate clear, traceable PDF reports from one simple workflow."
+    />
+    <meta property="og:image" content="/assets/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_GB" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Pressure Test Log — professional pressure test records" />
+    <meta
+      name="twitter:description"
+      content="Record test pressures, instruments, calibration details, evidence and signatures. Generate clear, traceable PDF reports from one simple workflow."
+    />
+    <meta name="twitter:image" content="/assets/og.png" />
+
+    <!--
+      Conversion tracking
+      No analytics or advertising tag is loaded.
+      When a tag is added later, paste it here, before </head>.
+      Map clicks with the data-cta values already on the buttons:
+      data-cta="explore-app" and data-cta="sample-report".
+      See docs/tracking.md.
+    -->
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Pressure Test Log",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "url": "https://pressure-test-log.vercel.app/",
+        "description": "Documentation and traceability for industrial pressure tests. Records pressures, instruments, calibration details, evidence and signatures, and generates a PDF. It does not calculate pressure or acceptance criteria.",
+        "inLanguage": ["en", "nb"]
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="brand" href="#top">
+          <img class="brand-mark" src="/assets/favicon.svg" alt="" width="28" height="28" />
+          Pressure Test Log
+        </a>
+        <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
+          Menu
+        </button>
+        <nav class="nav" id="site-nav" data-nav aria-label="Primary">
+          <a href="#features">Features</a>
+          <a href="#how">How it works</a>
+          <a href="#sample">Sample report</a>
+          <a href="#faq">FAQ</a>
+          <a
+            class="btn btn-primary"
+            id="cta-nav-explore"
+            data-cta="explore-app"
+            href="https://pressure-test-log.vercel.app/"
+            >Explore the app</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top">
+        <div class="wrap hero-grid">
+          <div>
+            <p class="kicker">Field documentation for pressure tests</p>
+            <h1>Professional pressure test records. Without the paperwork.</h1>
+            <p class="lede">
+              Record test pressures, instruments, calibration details, evidence and signatures. Generate clear,
+              traceable PDF reports from one simple workflow.
+            </p>
+            <div class="hero-actions">
+              <a
+                class="btn btn-primary"
+                id="cta-hero-explore"
+                data-cta="explore-app"
+                href="https://pressure-test-log.vercel.app/"
+                >Explore the app</a
+              >
+              <a class="btn btn-secondary" id="cta-hero-sample" data-cta="sample-report" href="#sample"
+                >See sample report</a
+              >
+            </div>
+            <p class="disclaimer">
+              Pressure and hold period are recorded values. The app does not calculate allowable pressure, hold period,
+              or acceptance criteria.
+            </p>
+            <ul class="fact-row">
+              <li>Stored on the device</li>
+              <li>English or Norwegian</li>
+              <li>bar(g), psi(g), MPa(g), kPa(g)</li>
+              <li>Signed PDF</li>
+            </ul>
+          </div>
+          <figure class="shot">
+            <img
+              src="/assets/screenshots/gauges-on-test.webp"
+              srcset="/assets/screenshots/gauges-on-test-800.webp 800w, /assets/screenshots/gauges-on-test.webp 1440w"
+              sizes="(max-width: 980px) 100vw, 560px"
+              width="1440"
+              height="1100"
+              alt="The live Pressure Test Log app in English. A draft record for line 6 inch WC-101 is on the Gauges step, with gauge PG-SAMPLE-014, range 0 to 40 bar(g), calibration marked valid. The screen says the gauge data is frozen when the record is signed."
+            />
+            <figcaption>Live app, 3 November 2026. Example data, not a real test.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="features">
+        <div class="wrap">
+          <p class="kicker">What you get</p>
+          <h2>The test record, kept together.</h2>
+          <p class="section-intro">
+            A hydrotest pack needs the line, the pressures, the gauge, the calibration reference, the evidence, and the
+            names. Pressure Test Log keeps those in one record and prints them to a PDF.
+          </p>
+          <div class="benefit-grid">
+            <article>
+              <h3>The job and the test object</h3>
+              <p>
+                Project number, client, location, line or system number, drawing or isometric, and test medium: water,
+                air, nitrogen, or another medium you describe.
+              </p>
+            </article>
+            <article>
+              <h3>Pressures as entered</h3>
+              <p>
+                Design pressure, test pressure, hold period, and the initial and final readings. Each one is marked
+                manually recorded, in the unit chosen for that test.
+              </p>
+            </article>
+            <article>
+              <h3>Gauge and calibration</h3>
+              <p>
+                A gauge register with ID, type, range, serial number, calibration date, due date, and certificate
+                number. Signing freezes that data into the record.
+              </p>
+            </article>
+            <article>
+              <h3>Evidence, signatures, PDF</h3>
+              <p>
+                Before and after photos, an operator signature, a witness signature, and a PDF of the signed revision,
+                with the earlier revision kept if you correct it.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="problem">
+        <div class="wrap split">
+          <div>
+            <p class="kicker">The paperwork</p>
+            <h2>The pack is often in four places.</h2>
+            <p class="section-intro">
+              Turnover documentation still gets assembled after the test: a paper form, a spreadsheet, photos on a
+              phone, and a calibration certificate in an email. When someone asks for the gauge, the hold, and who
+              signed, those pieces are easy to split.
+            </p>
+          </div>
+          <ul class="problem-list">
+            <li>
+              <strong>Paper forms</strong>
+              <span>Readings and signatures that never quite match the photos taken on the same day.</span>
+            </li>
+            <li>
+              <strong>Spreadsheets</strong>
+              <span>Pressures in a workbook, with the gauge identity and the certificate number somewhere else.</span>
+            </li>
+            <li>
+              <strong>Scattered files</strong>
+              <span>A revision that overwrites the original, or a pack that cannot show what was signed first.</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="how">
+        <div class="wrap">
+          <p class="kicker">How it works</p>
+          <h2>Record, document, sign, export.</h2>
+          <p class="section-intro">
+            One job can hold several pressure tests. Each test moves through the same four steps. A draft stays
+            editable. Signing locks that revision.
+          </p>
+          <div class="steps">
+            <article>
+              <span class="step-no">01 — Record</span>
+              <h3>Open the test</h3>
+              <p>
+                Create a job for the site, then a pressure test for the line or system. Enter the medium and the
+                pressures in bar(g), psi(g), MPa(g), or kPa(g).
+              </p>
+            </article>
+            <article>
+              <span class="step-no">02 — Document</span>
+              <h3>Attach the gauge</h3>
+              <p>
+                Link a gauge from the register and add photos from before and after the test. Photos are compressed and
+                stored on the device, up to four for each moment.
+              </p>
+            </article>
+            <article>
+              <span class="step-no">03 — Sign</span>
+              <h3>Lock the revision</h3>
+              <p>
+                The person who performed the test signs, and a witness signs. Signing freezes the gauge data and the
+                company name from settings.
+              </p>
+            </article>
+            <article>
+              <span class="step-no">04 — Export</span>
+              <h3>Hand over the PDF</h3>
+              <p>
+                Show or download the PDF in English or Norwegian. A correction is a new revision. The original
+                signature stays.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="calibration">
+        <div class="wrap media-block">
+          <div class="copy prose">
+            <p class="kicker">Instruments</p>
+            <h2>Calibration traceability on the record.</h2>
+            <p>
+              The gauge register holds pressure gauges, digital pressure gauges, pressure transmitters, chart
+              recorders, or another type you name. Each entry has a range, a serial number, the calibration date, the
+              due date, and the certificate number.
+            </p>
+            <p>
+              The register shows the calibration as valid, due soon, or expired. Due soon does not block signing. An
+              expired calibration can be used on a signed record only when the operator confirms it and writes a
+              justification of at least 10 characters. That text is locked into the record.
+            </p>
+            <p>
+              If the gauge unit differs from the test unit, the operator acknowledges the difference before signing.
+              The acknowledgement records that the difference was noticed. It does not confirm the gauge is suitable
+              for the test.
+            </p>
+            <p>
+              On signing, the gauge data is frozen as it stands in the register. Later edits, or removing the gauge
+              from the register, do not change a record that is already signed.
+            </p>
+          </div>
+          <figure class="shot">
+            <img
+              src="/assets/screenshots/register.webp"
+              srcset="/assets/screenshots/register-800.webp 800w, /assets/screenshots/register.webp 1440w"
+              sizes="(max-width: 980px) 100vw, 620px"
+              width="1440"
+              height="720"
+              alt="Gauge register in the live app. One example gauge, PG-SAMPLE-014, pressure gauge, 0 to 40 bar(g), serial SN-SAMPLE-44821, calibrated 12 March 2026, due 12 March 2027, certificate CAL-SAMPLE-2026-118, status Valid."
+            />
+            <figcaption>Gauge register. Example instrument, not a real certificate.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="evidence">
+        <div class="wrap media-block reverse">
+          <figure class="shot">
+            <img
+              src="/assets/screenshots/readings.webp"
+              srcset="/assets/screenshots/readings-800.webp 800w, /assets/screenshots/readings.webp 1440w"
+              sizes="(max-width: 980px) 100vw, 640px"
+              width="1440"
+              height="1100"
+              alt="Test details in the live app for line 6 inch WC-101, drawing ISO-SAMPLE-014 rev A, medium Water. Test parameters show design pressure 16 bar(g), test pressure 24 bar(g), and a hold period of 30 minutes recorded by the operator. Initial reading 24.0 bar(g) at 10:10 and final reading 23.8 bar(g) at 10:42 on 16 April 2026."
+            />
+            <figcaption>Manual readings, with timestamps. Example data.</figcaption>
+          </figure>
+          <div class="copy prose">
+            <p class="kicker">On the test</p>
+            <h2>Manual readings, photos, and signatures.</h2>
+            <p>
+              Design pressure, test pressure, hold period, and the initial and final readings are typed in by the
+              operator. A timestamp is set when a value is entered, and can be refreshed with New timestamp. The hold
+              period is not calculated from those timestamps. If the recorded hold is longer than the time between the
+              readings, the app notes it and leaves the number as entered.
+            </p>
+            <p>Ambient temperature and test-medium temperature are optional. The result is Accepted or Rejected. A comment is required when the result is rejected.</p>
+            <p>
+              Photos are taken before and after the test, as JPG or PNG, up to four for each moment. They are
+              compressed and stored on the device.
+            </p>
+            <p>
+              Signatures are drawn on screen with a finger or stylus. The record asks for the operator’s name, the
+              witness’s name, and the witness company. The company printed on the record is the company name from
+              settings, frozen when that revision is signed. It is not another person, and it is not the witness.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="reports">
+        <div class="wrap media-block">
+          <div class="copy prose">
+            <p class="kicker">The handover</p>
+            <h2>PDF reports and revision history.</h2>
+            <p>
+              A signed record can be shown or downloaded as a PDF titled Pressure test record. The file carries the
+              project, the test object, the recorded values, the result, the gauges, the photos, the signatures, the
+              revision list, and a SHA-256 hash.
+            </p>
+            <p>
+              The hash is of the canonical data for that signed revision. It is not a hash of the PDF file itself. You
+              can copy it from the record.
+            </p>
+            <p>
+              The original stays when you correct a record. A revision needs a reason and the name of the person
+              revising. It is signed again. Signed revisions cannot be deleted, and a job that contains signed records
+              cannot be deleted. Drafts can.
+            </p>
+            <p>
+              Company name and an optional logo come from settings and are frozen into the revision. The mark on the
+              sample report is an example, not a company logo.
+            </p>
+          </div>
+          <figure class="shot">
+            <img
+              src="/assets/screenshots/revisions.webp"
+              srcset="/assets/screenshots/revisions-800.webp 800w, /assets/screenshots/revisions.webp 1440w"
+              sizes="(max-width: 980px) 100vw, 620px"
+              width="1440"
+              height="1100"
+              alt="Signed record in the live app showing operator and witness signatures, a SHA-256 hash, a revision reason, and a revision list with the original and Rev 1. PDF language buttons read English and Norsk."
+            />
+            <figcaption>Revision list and PDF language on a signed example record.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="international">
+        <div class="wrap media-block reverse">
+          <figure class="shot">
+            <img
+              src="/assets/screenshots/units.webp"
+              srcset="/assets/screenshots/units-800.webp 800w, /assets/screenshots/units.webp 1440w"
+              sizes="(max-width: 980px) 100vw, 640px"
+              width="1440"
+              height="1100"
+              alt="Pressure unit list open in the live English app, showing bar(g), psi(g), MPa(g) and kPa(g). The hint under the list says the unit is stored with the readings and the app does not convert between units. English and Norsk language buttons are in the sidebar."
+            />
+            <figcaption>Pressure unit is stored with the readings. Numbers are not converted.</figcaption>
+          </figure>
+          <div class="copy prose">
+            <p class="kicker">International use</p>
+            <h2>English or Norwegian. The unit you work in.</h2>
+            <p>
+              The screen language defaults to English. Norsk is on the same control, in the sidebar and in Settings.
+              The choice is stored on the device. It sets the screen text. PDF language is chosen separately, when the
+              record is shown.
+            </p>
+            <p>
+              Each test has one pressure unit: bar(g), psi(g), MPa(g), or kPa(g). The same list is used for the gauge
+              range. The app stores the unit with the readings and does not convert between them. Changing the unit
+              clears pressures already entered. The numbers are not recalculated.
+            </p>
+            <p>
+              An older record that has no stored unit is shown as bar(g). The numbers on that record are left as they
+              were.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="audience">
+        <div class="wrap">
+          <p class="kicker">Who it’s for</p>
+          <h2>People who have to hand over a test pack.</h2>
+          <p class="section-intro">
+            Written for test operators, QC inspectors, contractors, and technical staff who document pressure tests on
+            industrial piping — including work in the North Sea, the UK, and Norway.
+          </p>
+          <div class="audience">
+            <article>
+              <h3>Test operators</h3>
+              <p>Record the hydrotest or other pressure test while the gauge, the readings, and the photos are still in front of you.</p>
+            </article>
+            <article>
+              <h3>QC inspectors</h3>
+              <p>Check that the gauge identity, the calibration reference, the hold, and the signatures are in the same record.</p>
+            </article>
+            <article>
+              <h3>Contractors</h3>
+              <p>Put a traceable PDF into the turnover documentation, and keep the earlier revision if the record is corrected.</p>
+            </article>
+            <article>
+              <h3>Technical staff</h3>
+              <p>Work in the unit and the language the job uses, without the app rewriting the pressures.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="sample">
+        <div class="wrap">
+          <p class="kicker">Sample report</p>
+          <h2>A PDF from the live app, marked as an example.</h2>
+          <p class="section-intro">
+            This file was generated by Pressure Test Log on 3 November 2026. It is the original signed revision of an
+            example record. The pages below are that PDF.
+          </p>
+          <p class="sample-banner">
+            Sample data. Not a real test, client, yard, gauge, certificate, or signature. The company mark on the PDF
+            is an example, not a customer logo.
+          </p>
+          <div class="sample-pages">
+            <figure class="paper">
+              <img
+                src="/assets/sample/page-1.webp"
+                width="1100"
+                height="1556"
+                alt="Page 1 of the example pressure test record. Project SAMPLE-2026-014, client Example client (not a real company), line 6 inch WC-101, water, design pressure 16 bar(g), test pressure 24 bar(g), hold 30 minutes, readings 24.0 and 23.8 bar(g), gauge PG-SAMPLE-014, result accepted."
+              />
+              <figcaption>Page 1 of 2 — recorded values and gauge.</figcaption>
+            </figure>
+            <figure class="paper">
+              <img
+                src="/assets/sample/page-2.webp"
+                width="1100"
+                height="1556"
+                alt="Page 2 of the example pressure test record, with sample before and after evidence images, signatures for A. Example and B. Example, the original revision, and a SHA-256 of the signed revision data."
+              />
+              <figcaption>Page 2 of 2 — photos, signatures, hash.</figcaption>
+            </figure>
+          </div>
+          <div class="sample-actions">
+            <a
+              class="btn btn-primary"
+              id="cta-sample-download"
+              data-cta="sample-report"
+              href="/assets/sample/sample-pressure-test-record.pdf"
+              download
+              >Download sample PDF</a
+            >
+            <a
+              class="btn btn-secondary"
+              id="cta-sample-explore"
+              data-cta="explore-app"
+              href="https://pressure-test-log.vercel.app/"
+              >Explore the app</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <section id="faq">
+        <div class="wrap">
+          <p class="kicker">FAQ</p>
+          <h2>Storage, language, units, and limits.</h2>
+          <div class="faq">
+            <details>
+              <summary>Where are the records stored?</summary>
+              <p>
+                On the device, in this browser. Jobs, tests, photos, signatures, the gauge register, and settings are
+                kept locally. Settings states that data is stored only on this device, and that sync between people in
+                the same company is not in this version.
+              </p>
+              <p>
+                You can export or import every job, test, gauge, and the settings as JSON. Import replaces what is
+                already on that device. Clearing the browser’s site data removes the records unless you have a backup.
+              </p>
+            </details>
+            <details>
+              <summary>Does it work offline?</summary>
+              <p>
+                After the app has been opened once, it can load again with no network. A service worker stores the app
+                files, and the records stay in the browser. When the device is offline, the screen says that everything
+                is stored on this device. A first visit still needs a connection.
+              </p>
+              <p>
+                The app can be added to the home screen from Settings, or from the browser menu. That installs the app
+                shell. It does not copy records onto another phone or computer.
+              </p>
+            </details>
+            <details>
+              <summary>Which languages does it use?</summary>
+              <p>
+                English is the default screen language. Norsk is available from the language control. That choice is
+                saved on the device and changes the screen text. The PDF language is chosen when you show the record,
+                so the document can be English or Norwegian independently of the screen.
+              </p>
+            </details>
+            <details>
+              <summary>What pressure units are available?</summary>
+              <p>
+                bar(g), psi(g), MPa(g), and kPa(g). The unit is stored with the readings. The app does not convert
+                between them. If you change the unit, the recorded pressures are cleared, and the numbers are not
+                converted. Gauge range uses the same units.
+              </p>
+            </details>
+            <details>
+              <summary>What about security?</summary>
+              <p>
+                There is no Pressure Test Log account. The documentation workflow does not upload the test record to a
+                server. Photos, signatures, and gauge data stay in the browser on that device.
+              </p>
+              <p>
+                The hosted app does load Vercel Web Analytics, which can record that the app was opened. That is a page
+                view of the application, not the contents of a test record. This page is not a security audit, and the
+                product does not carry a security certification.
+              </p>
+            </details>
+            <details open>
+              <summary>Does it certify a test or check a code?</summary>
+              <p>
+                No. Pressure Test Log is a documentation tool. It does not certify a test, and it does not check
+                compliance with ASME, EN, or any other standard. It does not calculate allowable pressure, hold period,
+                or acceptance criteria. Accepted and Rejected are results entered by the operator.
+              </p>
+              <p>
+                A gauge-unit acknowledgement only records that a difference was noticed. It does not confirm the gauge
+                is suitable. Calibration due soon does not block signing. An expired calibration can be signed only
+                with a written justification.
+              </p>
+            </details>
+            <details>
+              <summary>What else is not in this version?</summary>
+              <p>There is no data-logger connection and no sync between devices or people. Records do not follow you to another browser unless you export the JSON backup and import it there.</p>
+              <ul>
+                <li>Photos: up to four before the test and four after, JPG or PNG.</li>
+                <li>Witness name, witness company, and both signatures are required before a record can be locked.</li>
+                <li>At least one gauge must be linked.</li>
+                <li>Signed revisions cannot be deleted. A job with signed records cannot be deleted.</li>
+              </ul>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section class="pilot" id="pilot">
+        <div class="wrap pilot-inner">
+          <div>
+            <p class="kicker">Try it on a real pack</p>
+            <h2>Use it on the next test you have to document.</h2>
+            <p>
+              Open the app, create a job, and record one test through to a signed PDF. The record stays on that device.
+              If you want a finished example before you enter your own, Settings can load demo data: one job, two
+              gauges, and one signed test. That demo is example data supplied with the app, not a customer.
+            </p>
+          </div>
+          <a
+            class="btn btn-primary"
+            id="cta-pilot-explore"
+            data-cta="explore-app"
+            href="https://pressure-test-log.vercel.app/"
+            >Explore the app</a
+          >
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <p>
+          Pressure Test Log. Documentation and traceability for industrial pressure tests.<br />
+          The app does not calculate pressure, hold period, or acceptance criteria.
+        </p>
+        <p class="footer-links">
+          <a id="cta-footer-explore" data-cta="explore-app" href="https://pressure-test-log.vercel.app/">Open the app</a>
+          <a href="#sample">Sample report</a>
+        </p>
+      </div>
+    </footer>
+    <script src="/js/site.js" defer></script>
+  </body>
+</html>
