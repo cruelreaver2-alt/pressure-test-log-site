@@ -1,10 +1,10 @@
 # GitHub and Cloudflare Pages
 
-This site is not deployed. The GitHub repository is public:
+This site is not deployed. The GitHub repository is private:
 
 https://github.com/cruelreaver2-alt/pressure-test-log-site
 
-Default branch: `main`. Because the repository is public, it must contain only this marketing site. No tokens, no `.env` files, no private app source, and no customer data. The sample report is labelled example data. Do not connect a domain until the launch checklist says so.
+Default branch: `main`. It must contain only this marketing site. No tokens, no `.env` files, no private app source, and no customer data. The sample report is labelled example data. Do not connect a domain until the launch checklist says so.
 
 The public site is the `dist/` folder produced by `bash build.sh`. Design, copy, screenshots, and the sample PDF are copied unchanged. Docs, `serve.py`, and `build.sh` stay in git and are not part of the upload.
 
@@ -47,9 +47,9 @@ Nothing was deleted from git in the audit. These are kept in the repository and 
 
 ## 1. GitHub repository
 
-The public repository is https://github.com/cruelreaver2-alt/pressure-test-log-site with default branch `main`. It was created empty. Do not add a GitHub README, license, or `.gitignore` on top of this tree, or the first push will need a merge.
+The repository is private: https://github.com/cruelreaver2-alt/pressure-test-log-site, default branch `main`. It was created empty. Do not add a GitHub README, license, or `.gitignore` on top of this tree, or the first push will need a merge.
 
-Push `main` from this checkout only when asked. Do not force-push. Anything pushed there is world-readable, so keep secrets and the private application source out.
+Push `main` from this checkout only when asked. Do not force-push. A private repository is still the wrong place for secrets or the private application source.
 
 ## 2. Branch protection on `main`
 
@@ -143,7 +143,7 @@ Do not force-push `main`. Branch protection blocks it, and a force-push would no
 
 ## Publishing checklist
 
-- [ ] Public repository https://github.com/cruelreaver2-alt/pressure-test-log-site stays free of secrets and private source
+- [ ] Private repository https://github.com/cruelreaver2-alt/pressure-test-log-site stays free of secrets and private source
 - [ ] `main` pushed to that repository when asked, without a force-push
 - [ ] GitHub ruleset on `main`: pull request required, force-push and deletion blocked, bypass list empty
 - [ ] Pages project connected to that GitHub repository (Git integration, not Direct Upload)

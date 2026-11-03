@@ -2,7 +2,7 @@
 
 Marketing site for Pressure Test Log. Static files only. The Pressure Test Log application was not modified, and nothing was published.
 
-Reviewed against the live app at `https://pressure-test-log.vercel.app/` on 3 November 2026. The application source was not in this marketing repository, so the check is the deployed app: the HTML document, the bundles it loads, and the screens and PDF produced by driving that app in Chrome. This marketing repository is public.
+Reviewed against the live app at `https://pressure-test-log.vercel.app/` on 3 November 2026. The application source was not in this marketing repository, so the check is the deployed app: the HTML document, the bundles it loads, and the screens and PDF produced by driving that app in Chrome. This marketing repository is private.
 
 The HTML document was last modified `Tue, 03 Nov 2026 10:49:06 GMT`. The screen language was already English by default.
 
@@ -108,4 +108,4 @@ Checked in Chrome at 1440×900, 834×1112, 768×1024, and 390×844: no horizonta
 - The downloadable PDF is the original revision. Revision 1 is shown in a screenshot, not as a second file.
 - Offline behaviour was checked by loading the app once and reloading with the network off. A cold start with no cache was not claimed.
 - Vercel Web Analytics is described from the bundle (the component is mounted and loads the insights script). The contents of a test record were not observed leaving the browser. This is not a penetration test.
-- The application source is not part of this public marketing repository. If a later deploy changes the app, these claims need to be checked again.
+- The application source is not part of this marketing repository. If a later deploy changes the app, these claims need to be checked again.
