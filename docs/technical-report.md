@@ -21,7 +21,7 @@ The HTML document was last modified `Tue, 03 Nov 2026 10:49:06 GMT`. The screen 
 | `robots.txt` | Allows crawling. Sitemap is left unset until a domain exists. |
 | `serve.py` | Local preview on port 4178. Pages does not run it. |
 | `docs/cloudflare-pages.md` | Publish steps. Not carried out. |
-| `docs/tracking.md` | Where a tag would go. None is installed. |
+| `docs/tracking.md` | Cloudflare Web Analytics is enabled. No advertising tag. |
 
 There is no build step and no server function. Preview with `python3 serve.py`.
 
@@ -102,7 +102,7 @@ Checked in Chrome at 1440×900, 834×1112, 768×1024, and 390×844: no horizonta
 
 - Canonical URL, `og:url`, and absolute social-image URLs are unset until a domain is connected. The comment in `index.html` is marked `CANONICAL`.
 - `robots.txt` has no sitemap yet, for the same reason.
-- No analytics or advertising tag is present. See `docs/tracking.md`.
+- Cloudflare Web Analytics is enabled on this marketing site. It is cookieless and collects no personal data. No advertising tag is present. See `docs/tracking.md`.
 - The site is not on Cloudflare, and no domain was bought.
 - The sample’s reading timestamps were aligned in the on-device draft, as described above.
 - The downloadable PDF is the original revision. Revision 1 is shown in a screenshot, not as a second file.

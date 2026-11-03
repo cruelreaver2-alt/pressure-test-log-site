@@ -39,4 +39,4 @@ The Pages project `pressure-test-log-site` is connected to this Git repository. 
 - `_headers`, `_redirects` — Cloudflare cache, security headers, and `/index.html` → `/`
 - `docs/technical-report.md` — what was verified, and where
 - `docs/cloudflare-pages.md` — GitHub, Pages, previews, rollback
-- `docs/tracking.md` — where a tag would go; none is installed
+- `docs/tracking.md` — Cloudflare Web Analytics is enabled; no advertising tag

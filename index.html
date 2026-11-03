@@ -38,8 +38,8 @@
 
     <!--
       Conversion tracking
-      No analytics or advertising tag is loaded.
-      When a tag is added later, paste it here, before </head>.
+      Cloudflare Web Analytics is loaded just before </body>.
+      No advertising tag is loaded.
       Map clicks with the data-cta values already on the buttons:
       data-cta="explore-app" and data-cta="sample-report".
       See docs/tracking.md.
@@ -593,5 +593,6 @@
       </div>
     </footer>
     <script src="/js/site.js" defer></script>
+    <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "461a78f2e905485b9da61f5f40b849ab"}'></script><!-- End Cloudflare Web Analytics -->
   </body>
 </html>

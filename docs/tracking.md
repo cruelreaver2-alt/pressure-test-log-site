@@ -1,16 +1,14 @@
 # Conversion tracking
 
-No analytics tag, advertising tag, or cookie banner is installed. The marketing site does not call a third party.
+Cloudflare Web Analytics is enabled. The beacon is in `index.html`, immediately before `</body>`. It is cookieless and privacy-friendly, and it collects no personal data. No advertising tag and no cookie banner is installed.
 
-## Where to add a tag
+## The beacon
 
-In `index.html`, paste the tag in the comment marked `Conversion tracking`, immediately before `</head>`.
-
-If you add a Content-Security-Policy later, allow the tag’s host in that policy. `_headers` does not set a CSP today, so a new tag is not blocked by one.
+`_headers` does not set a Content-Security-Policy. If one is added later, `script-src` must include `https://static.cloudflareinsights.com` and `connect-src` must include `https://cloudflareinsights.com`.
 
 ## Click identifiers
 
-These attributes are stable and are not wired to any script:
+These attributes are stable and are not wired to the analytics beacon:
 
 | Element | id | data-cta |
 | --- | --- | --- |
@@ -24,7 +22,7 @@ These attributes are stable and are not wired to any script:
 
 `explore-app` goes to `https://pressure-test-log.vercel.app/`. `sample-report` is either the on-page sample (`#sample`) or the PDF download.
 
-For Google Ads, a typical setup is a conversion on the `explore-app` click, and optionally a second conversion on `sample-report`. Add that listener in the same head comment, or in `js/site.js`, when you are ready. Do not add it before you have a tag ID and a privacy notice.
+For Google Ads, a typical setup is a conversion on the `explore-app` click, and optionally a second conversion on `sample-report`. Add that listener in the head comment marked `Conversion tracking`, or in `js/site.js`, when you are ready. Do not add it before you have a tag ID and a privacy notice.
 
 ## After the domain is connected
 
