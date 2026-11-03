@@ -109,7 +109,7 @@ Do not force-push `main`. Branch protection blocks it, and a force-push would no
 - Edit the page in `index.html`, `css/`, `js/`, and `assets/`. Do not edit `dist/`; the next build overwrites it.
 - Every link to the app must stay `https://pressure-test-log.vercel.app/`, including the JSON-LD `url`. `index.html` has five of those links, plus the `url` in the JSON-LD block.
 - Screenshots and `assets/sample/sample-pressure-test-record.pdf` are the real sample. Replace them only with new output from the app, and keep the example-data label.
-- A tracking tag, if one is added later, goes in the head comment described in `docs/tracking.md`. None is installed.
+- Cloudflare Web Analytics is enabled. The beacon is just before `</body>` in `index.html`. It is cookieless and collects no personal data. See `docs/tracking.md`. No advertising tag is installed.
 - No environment variables and no Node packages. The build is `bash build.sh`.
 - `_headers` and `_redirects` must remain in the repo root so `build.sh` copies them into `dist/`.
 
