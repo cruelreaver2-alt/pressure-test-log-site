@@ -1,8 +1,8 @@
 # Technical report
 
-Marketing site for Pressure Test Log. Static files only. The Pressure Test Log application was not modified, and nothing was published.
+Marketing site for Pressure Test Log. Static files only. The Pressure Test Log application was not modified. This marketing site is published at https://pressure-test-log-site.pages.dev. A merge to `main` deploys there automatically.
 
-Reviewed against the live app at `https://pressure-test-log.vercel.app/` on 3 November 2026. The application source was not in this marketing repository, so the check is the deployed app: the HTML document, the bundles it loads, and the screens and PDF produced by driving that app in Chrome. This marketing repository is private.
+Reviewed against the live app at `https://pressure-test-log.vercel.app/` on 3 November 2026. The application source was not in this marketing repository, so the check is the deployed app: the HTML document, the bundles it loads, and the screens and PDF produced by driving that app in Chrome. This marketing repository is public.
 
 The HTML document was last modified `Tue, 03 Nov 2026 10:49:06 GMT`. The screen language was already English by default.
 
@@ -20,7 +20,7 @@ The HTML document was last modified `Tue, 03 Nov 2026 10:49:06 GMT`. The screen 
 | `_headers` | Cache and security headers for Cloudflare Pages. |
 | `robots.txt` | Allows crawling. Sitemap is left unset until a domain exists. |
 | `serve.py` | Local preview on port 4178. Pages does not run it. |
-| `docs/cloudflare-pages.md` | Publish steps. Not carried out. |
+| `docs/cloudflare-pages.md` | GitHub, Pages, previews, and rollback. Production deploys from `main` are on. |
 | `docs/tracking.md` | Cloudflare Web Analytics is enabled. No advertising tag. |
 
 There is no build step and no server function. Preview with `python3 serve.py`.
@@ -103,7 +103,7 @@ Checked in Chrome at 1440×900, 834×1112, 768×1024, and 390×844: no horizonta
 - Canonical URL, `og:url`, and absolute social-image URLs are unset until a domain is connected. The comment in `index.html` is marked `CANONICAL`.
 - `robots.txt` has no sitemap yet, for the same reason.
 - Cloudflare Web Analytics is enabled on this marketing site. It is cookieless and collects no personal data. No advertising tag is present. See `docs/tracking.md`.
-- The site is not on Cloudflare, and no domain was bought.
+- The marketing site is on Cloudflare Pages at https://pressure-test-log-site.pages.dev. Merges to `main` deploy there automatically. Pull requests and other branches get preview deployments. No custom domain is connected. Rollback is from the Pages deployments list.
 - The sample’s reading timestamps were aligned in the on-device draft, as described above.
 - The downloadable PDF is the original revision. Revision 1 is shown in a screenshot, not as a second file.
 - Offline behaviour was checked by loading the app once and reloading with the network off. A cold start with no cache was not claimed.

@@ -24,6 +24,8 @@ These attributes are stable and are not wired to the analytics beacon:
 
 For Google Ads, a typical setup is a conversion on the `explore-app` click, and optionally a second conversion on `sample-report`. Add that listener in the head comment marked `Conversion tracking`, or in `js/site.js`, when you are ready. Do not add it before you have a tag ID and a privacy notice.
 
+Production is already served at https://pressure-test-log-site.pages.dev. A merge to `main` updates that site. The tags below stay unset until a custom domain is connected.
+
 ## After the domain is connected
 
 Set the absolute canonical URL, `og:url`, and absolute `og:image` / `twitter:image` URLs. The placeholders are marked `CANONICAL` in `index.html`. Root-relative image paths work on the site itself; many social crawlers need an absolute image URL.
