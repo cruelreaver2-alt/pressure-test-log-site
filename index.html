@@ -3,6 +3,34 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'denied',
+        wait_for_update: 500
+      });
+      try {
+        if (localStorage.getItem('ptl-consent') === 'granted') {
+          gtag('consent', 'update', {
+            ad_storage: 'granted',
+            ad_user_data: 'granted',
+            ad_personalization: 'granted',
+            analytics_storage: 'granted'
+          });
+        }
+      } catch (e) {}
+    </script>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-NL8QNCQ9');</script>
+    <!-- End Google Tag Manager -->
     <title>Pressure Test Log — professional pressure test records</title>
     <meta
       name="description"
@@ -38,8 +66,8 @@
 
     <!--
       Conversion tracking
-      Cloudflare Web Analytics is loaded just before </body>.
-      No advertising tag is loaded.
+      Cloudflare Web Analytics is loaded just before </body>. It does not use cookies.
+      Google Tag Manager (GTM-NL8QNCQ9) is in the head. Google Ads cookies stay off until consent is accepted.
       Map clicks with the data-cta values already on the buttons:
       data-cta="explore-app" and data-cta="sample-report".
       See docs/tracking.md.
@@ -59,6 +87,10 @@
     </script>
   </head>
   <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NL8QNCQ9"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <a class="skip" href="#main">Skip to content</a>
     <header class="site-header">
       <div class="wrap header-inner">
@@ -578,6 +610,22 @@
           >
         </div>
       </section>
+
+      <section id="privacy">
+        <div class="wrap prose">
+          <p class="kicker">Privacy</p>
+          <h2>Cookies on this page</h2>
+          <p>
+            Cloudflare Web Analytics counts visits to this page without cookies and without personal data. Google Tag
+            Manager and Google Ads cookies measure whether an advertisement led here. They are set only if you accept.
+            Reject keeps them off. The choice is stored in this browser.
+          </p>
+          <p>
+            The Pressure Test Log app is separate. Test records stay on the device you use for the app. This page does
+            not receive them.
+          </p>
+        </div>
+      </section>
     </main>
 
     <footer class="site-footer">
@@ -589,9 +637,26 @@
         <p class="footer-links">
           <a id="cta-footer-explore" data-cta="explore-app" href="https://pressure-test-log.vercel.app/">Open the app</a>
           <a href="#sample">Sample report</a>
+          <a href="#privacy">Privacy</a>
+          <button type="button" class="footer-consent" id="consent-reopen">Cookie choices</button>
         </p>
       </div>
     </footer>
+    <div class="consent" id="consent-banner" role="dialog" aria-labelledby="consent-title" aria-describedby="consent-text" hidden>
+      <div class="wrap consent-inner">
+        <div>
+          <p class="consent-title" id="consent-title">Cookies</p>
+          <p id="consent-text">
+            Google Tag Manager and Google Ads cookies are used to measure ad performance.
+            <a href="#privacy">Privacy</a>
+          </p>
+        </div>
+        <div class="consent-actions">
+          <button type="button" class="btn consent-choice" id="consent-reject">Reject</button>
+          <button type="button" class="btn consent-choice" id="consent-accept">Accept</button>
+        </div>
+      </div>
+    </div>
     <script src="/js/site.js" defer></script>
     <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "461a78f2e905485b9da61f5f40b849ab"}'></script><!-- End Cloudflare Web Analytics -->
   </body>
